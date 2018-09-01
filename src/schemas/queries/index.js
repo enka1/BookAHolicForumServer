@@ -1,12 +1,7 @@
-import {
-  GraphQLObjectType
-} from 'graphql'
+import {GraphQLObjectType} from 'graphql'
 
-import User from './User.query'
+import users from './User.query'
 
-export default new GraphQLObjectType({
-  name: 'RootQuery',
-  fields: {
-    User
-  }
-})
+export default new GraphQLObjectType({name: 'RootQuery', fields: {
+    users
+  }})

@@ -11,9 +11,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  avatar: {
+  display_name: {
     type: String,
     required: true
+  },
+  avatar: {
+    type: String
   }
 })
 
