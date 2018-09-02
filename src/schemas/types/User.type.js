@@ -1,8 +1,11 @@
-import {GraphQLString, GraphQLObjectType} from 'graphql'
+import {GraphQLString, GraphQLObjectType, GraphQLList} from 'graphql'
+
+import {PostType, CommentType} from './'
+import {PostModel} from '../../models'
 
 export default new GraphQLObjectType({
   name: 'UserType',
-  fields: {
+  fields: () => ({
     id: {
       type: GraphQLString
     },
@@ -17,6 +20,18 @@ export default new GraphQLObjectType({
     },
     avatar: {
       type: GraphQLString
+    },
+    posts: {
+      type: new GraphQLList(PostType),
+      resolve: (user) => {
+        return PostModel.where({creator: user._id})
+      }
+    },
+    comments: {
+      type: new GraphQLList(CommentType),
+      resolve: (user) => {
+        return
+      }
     }
-  }
+  })
 })

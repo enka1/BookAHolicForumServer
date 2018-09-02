@@ -1,12 +1,12 @@
 import {UserModel} from '../../models'
-import {UserInput} from '../inputs'
-import {User} from '../types'
+import {UserInputType} from '../inputs'
+import {UserType} from '../types'
 
 export default {
-  type : User,
+  type : UserType,
   args : {
     user: {
-      type: UserInput
+      type: UserInputType
     }
   },
   resolve : (_, args) => {

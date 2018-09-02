@@ -1,3 +1,5 @@
-import User from './User.type'
+import UserType from './User.type'
+import PostType from './Post.type'
+import CommentType from './Comment.type'
 
-export {User}
+export {UserType, PostType, CommentType}

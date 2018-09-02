@@ -1,3 +1,4 @@
-import UserInput from './User.input'
+import UserInputType from './User.input'
+import PostInputType from './Post.input'
 
-export {UserInput}
+export {UserInputType, PostInputType}
