@@ -12,7 +12,7 @@ import schema from './schemas'
 
 connectMongoDB()
 
-const app = express()
+export const app = express()
 const server = http.createServer(app)
 const io = socketIO(server)
 
@@ -21,20 +21,14 @@ app.use(body_parser.json())
 app.use(session({
   saveUninitialized: true,
   secret: 'asd',
-  resave: true,
+  resave: false,
   cookie: {
+    expires: 1000 * 60 * 48,
     maxAge: 1000 * 60 * 48
   }
 }))
 app.use('/graphql', express_graphql({graphiql: true, pretty: true, schema}))
 
-app.get('/user/:id', (req, res) => {
-  req.session.user = req.params.id
-  res.send('Nice')
-})
-
-app.get('/user', (req, res) => {
-  res.send(req.session.user)
-})
+require('./api')
 
 server.listen(3001)

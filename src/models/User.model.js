@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
+import {jwtSecret} from '../config'
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -30,8 +33,25 @@ const UserSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Comment'
     }
-  ]
+  ],
+  token: {
+    type: String
+  }
 })
+
+UserSchema.methods.generate_token = function () {
+  const token = jwt.sign({
+    id: this._id
+  }, jwtSecret)
+  this.token = token
+  this.save()
+  return token
+}
+
+UserSchema.methods.remove_token = function(){
+  this.token = null
+  this.save()
+}
 
 UserSchema.pre('save', async function (next) {
   if (this.isModified('password')) {

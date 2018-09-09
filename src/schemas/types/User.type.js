@@ -30,7 +30,7 @@ export default new GraphQLObjectType({
     comments: {
       type: new GraphQLList(CommentType),
       resolve: (user) => {
-        return
+        return null
       }
     }
   })

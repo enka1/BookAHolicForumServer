@@ -1,6 +1,12 @@
 import {GraphQLObjectType} from 'graphql'
 
-import User from './User.mutation'
-export default new GraphQLObjectType({name: 'RootMutation', fields: {
-    User
-  }})
+import createUser from './User.mutation'
+import createPost from './create_post.mutation'
+
+export default new GraphQLObjectType({
+  name: 'RootMutation',
+  fields: {
+    createUser,
+    createPost
+  }
+})

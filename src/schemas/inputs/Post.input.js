@@ -5,6 +5,15 @@ export default new GraphQLInputObjectType({
   fields: {
     id: {
       type: GraphQLString
+    },
+    author_id: {
+      type: GraphQLString
+    },
+    title: {
+      type: GraphQLString
+    },
+    content: {
+      type: GraphQLString
     }
   }
 })
