@@ -11,10 +11,10 @@ export default {
       type: PostInputType
     }
   },
-  resolve : async(_, args) => {
+  resolve : async(_, args, context) => {
     let {title, content, author_id} = args.post
     let user = await UserModel.findById(author_id)
-    let post = new PostModel({title, content})
+    let post = new PostModel({title, content, created_at: new Date()})
     post.creator = user
     user
       .posts

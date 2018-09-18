@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import moment from 'moment'
 
 const PostSchema = new mongoose.Schema({
   creator: {
@@ -16,7 +15,7 @@ const PostSchema = new mongoose.Schema({
   },
   created_at: {
     type: Date,
-    default: moment()
+    required: true
   },
   comments: [
     {

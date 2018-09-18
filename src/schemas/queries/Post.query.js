@@ -12,6 +12,6 @@ export default {
     }
   },
   resolve : (_, args) => {
-    return PostModel.find()
+    return PostModel.find(args.post)
   }
 }
