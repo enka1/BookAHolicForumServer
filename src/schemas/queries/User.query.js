@@ -12,13 +12,13 @@ export default {
       type: UserInputType
     }
   },
-  resolve : async(_, args) => {
-    if (args.user) {
-      if (args.user.username) 
-        args.user.username = new RegExp(args.user.username)
-      if (args.user.display_name) 
-        args.user.display_name = new RegExp(args.user.display_name)
+  resolve : async(_, {user}) => {
+    if (user) {
+      if (user.username) 
+        user.username = new RegExp(user.username)
+      if (user.display_name) 
+        user.display_name = new RegExp(user.display_name)
     }
-    return await UserModel.find(args.user)
+    return await UserModel.find(user)
   }
 }

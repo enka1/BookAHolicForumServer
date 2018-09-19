@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import moment from 'moment'
 
 const CommentSchema = new mongoose.Schema({
   creator: {
@@ -7,13 +6,17 @@ const CommentSchema = new mongoose.Schema({
     required: true,
     ref: 'User'
   },
+  post: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Post'
+  },
   content: {
     type: String,
     required: true
   },
   createdAt: {
-    type: Date,
-    default: moment()
+    type: Date
   },
   replies: [
     {
