@@ -9,7 +9,11 @@ export default new GraphQLObjectType({
   name: 'PostType',
   fields: () => ({
     id: {
-      type: GraphQLString
+      type: GraphQLString,
+      resolve: data => {
+        return data._id.toString()
+      }
+
     },
     creator: {
       type: UserType,

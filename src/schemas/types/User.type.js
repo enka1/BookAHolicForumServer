@@ -7,7 +7,8 @@ export default new GraphQLObjectType({
   name: 'UserType',
   fields: () => ({
     id: {
-      type: GraphQLString
+      type: GraphQLString,
+      resolve: data => data._id.toString()
     },
     username: {
       type: GraphQLString

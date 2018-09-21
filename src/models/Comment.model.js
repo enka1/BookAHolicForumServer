@@ -15,7 +15,7 @@ const CommentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  createdAt: {
+  created_at: {
     type: Date
   },
   replies: [
