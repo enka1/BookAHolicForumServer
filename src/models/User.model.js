@@ -7,13 +7,12 @@ import {jwtSecret} from '../config'
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true,
     unique: true,
+    required: true,
     ref: 'User'
   },
   password: {
-    type: String,
-    required: true
+    type: String
   },
   display_name: {
     type: String,
@@ -48,7 +47,7 @@ UserSchema.methods.generate_token = function () {
   return token
 }
 
-UserSchema.methods.remove_token = function(){
+UserSchema.methods.remove_token = function () {
   this.token = null
   this.save()
 }

@@ -1,7 +1,7 @@
-import {GraphQLObjectType, GraphQLString, GraphQLList} from 'graphql'
+import {GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt} from 'graphql'
 import {GraphQLDateTime} from 'graphql-iso-date'
 
-import {UserModel} from '../../models'
+import {UserModel, CommentModel} from '../../models'
 import {UserType} from './'
 import {CommentType} from '../types'
 
@@ -11,9 +11,10 @@ export default new GraphQLObjectType({
     id: {
       type: GraphQLString,
       resolve: data => {
-        return data._id.toString()
+        return data
+          ._id
+          .toString()
       }
-
     },
     creator: {
       type: UserType,
@@ -32,6 +33,12 @@ export default new GraphQLObjectType({
     },
     comments: {
       type: new GraphQLList(CommentType)
+    },
+    numOfComments: {
+      type: GraphQLInt,
+      resolve: async data => {
+        return await CommentModel.countDocuments({post: data._id})
+      }
     }
   })
 })

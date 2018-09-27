@@ -8,12 +8,15 @@ const CommentSchema = new mongoose.Schema({
   },
   post: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
     ref: 'Post'
   },
   content: {
     type: String,
     required: true
+  },
+  comment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment'
   },
   created_at: {
     type: Date
@@ -23,7 +26,30 @@ const CommentSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Comment'
     }
+  ],
+  like: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
+  love: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
+  dislike: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
   ]
 })
+CommentSchema.pre("remove", function (next) {
+  Comment.deleteMany({comment: this._id})
+  next()
+})
 
-export default mongoose.model('Comment', CommentSchema)
+const Comment = mongoose.model('Comment', CommentSchema)
+export default Comment

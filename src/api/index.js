@@ -1,4 +1,5 @@
 require('./authenticate/credential.authenticate')
 require('./authenticate/token.authenticate')
+require('./authenticate/social_network.authenticacte')
 require('./controller/logout.controller')
 require('./controller/user.controller')
