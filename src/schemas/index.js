@@ -8,4 +8,4 @@ import subscription from './subcriptions'
 export const pubSub = new PubSub()
 export const COMMENT_ADDED = 'COMMENT_ADDED'
 
-export default new GraphQLSchema({query, mutation})
+export default new GraphQLSchema({query, mutation, subscription})

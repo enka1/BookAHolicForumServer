@@ -17,6 +17,7 @@
     "babel-core": "^6.26.3",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-watch": "^2.0.7",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "check-types": "^7.4.0",
@@ -25,6 +26,7 @@
     "express-graphql": "^0.6.12",
     "express-session": "^1.15.6",
     "graphql": "^14.0.0",
+    "graphql-disable-introspection": "^1.0.1",
     "graphql-iso-date": "^3.5.0",
     "graphql-subscriptions": "^1.0.0",
     "helmet": "^3.13.0",
@@ -35,10 +37,7 @@
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "socket.io": "^2.1.1",
-    "subscriptions-transport-ws": "^0.9.15",
-    "babel-watch": "^2.0.7"
+    "subscriptions-transport-ws": "^0.9.15"
   },
-  "devDependencies": {
-    
-  }
+  "devDependencies": {}
 }
