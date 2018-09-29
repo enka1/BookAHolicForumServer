@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "10.8.0"
+  },
   "scripts": {
     "start": "babel-watch src"
   },
@@ -32,9 +35,10 @@
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "socket.io": "^2.1.1",
-    "subscriptions-transport-ws": "^0.9.15"
+    "subscriptions-transport-ws": "^0.9.15",
+    "babel-watch": "^2.0.7"
   },
   "devDependencies": {
-    "babel-watch": "^2.0.7"
+    
   }
 }
