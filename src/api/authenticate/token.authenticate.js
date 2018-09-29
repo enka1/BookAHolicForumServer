@@ -15,7 +15,8 @@ app.get('/token', tokenValidate, async(req, res) => {
         authenticate: false,
         error: {
           msg: 'User has been removed'
-        }
+        },
+        user: null
       })
     }
     res.send({authenticate: true, user})
