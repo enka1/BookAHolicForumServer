@@ -29,7 +29,7 @@ export default {
       }
       throw Error('Authenticate Error')
     } catch (error) {
-      throw Error("Something gone wrong")
+      throw Error(error.message)
     }
   }
 }
