@@ -9,5 +9,5 @@ passport.use(GoogleStrategy)
 app.get('/auth/google', passport.authenticate('google', {session: false}))
 app.get('/auth/google/callback', passport.authenticate('google', {session: false}), (req, res) => {
   req.session.user = req.user
-  return res.redirect('http://localhost:3000')
+  res.send(req.user)
 })
