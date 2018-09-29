@@ -1,20 +1,18 @@
-import http from 'http'
 import express from 'express'
-import socketIO from 'socket.io'
 import cors from 'cors'
 import body_parser from 'body-parser'
-import express_graphql from 'express-graphql'
 import session from 'express-session'
 import 'babel-polyfill'
+import {ApolloServer} from 'apollo-server-express'
+import {SubscriptionServer} from 'subscriptions-transport-ws'
+import http from 'http'
+import {execute, subscribe} from 'graphql'
 
 import {connectMongoDB} from './models'
 import schema from './schemas'
 
 connectMongoDB()
-
 export const app = express()
-const server = http.createServer(app)
-const io = socketIO(server)
 
 app.use(cors())
 app.use(body_parser.json())
@@ -27,8 +25,24 @@ app.use(session({
     maxAge: 1000 * 60 * 48
   }
 }))
-app.use('/graphql', express_graphql({graphiql: true, pretty: true, schema}))
 
 require('./api')
+const server = new ApolloServer({
+  schema,
+  context: ({req}) => {
+    return {user: req.session.user}
+  }
+})
+server.applyMiddleware({app})
+const ws = http.createServer(app)
 
-server.listen(3001)
+ws.listen(3001, () => {
+  new SubscriptionServer({
+    execute,
+    subscribe,
+    schema
+  }, {
+    server: ws,
+    path: '/graphql'
+  });
+});

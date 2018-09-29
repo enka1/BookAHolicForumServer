@@ -1,4 +1,11 @@
 import {GraphQLSchema} from 'graphql'
+import {PubSub} from 'graphql-subscriptions'
+
 import query from './queries'
 import mutation from './mutations'
-export default new GraphQLSchema({query, mutation})
+import subscription from './subcriptions'
+
+export const pubSub = new PubSub()
+export const COMMENT_ADDED = 'COMMENT_ADDED'
+
+export default new GraphQLSchema({query, mutation, subscription})
