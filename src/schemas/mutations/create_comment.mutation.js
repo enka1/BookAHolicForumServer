@@ -16,24 +16,26 @@ export default {
     comment
   }, context) => {
     try {
-      console.log(context)
       let {post_id, user_id, content} = comment
-      let user = await UserModel.findById(user_id)
-      let post = await PostModel.findById(post_id)
-      let newComment = new CommentModel({content, created_at: new Date()})
-      newComment.creator = user
-      newComment.post = post
-      user
-        .comments
-        .push(newComment)
-      post
-        .comments
-        .push(newComment)
-      user.save()
-      post.save()
-      newComment.save()
-      pubSub.publish(COMMENT_ADDED, {commentSubcription: newComment})
-      return comment
+      if (context.user && context.user._id === user_id) {
+        let user = await UserModel.findById(user_id)
+        let post = await PostModel.findById(post_id)
+        let newComment = new CommentModel({content, created_at: new Date()})
+        newComment.creator = user
+        newComment.post = post
+        user
+          .comments
+          .push(newComment)
+        post
+          .comments
+          .push(newComment)
+        user.save()
+        post.save()
+        newComment.save()
+        pubSub.publish(COMMENT_ADDED, {commentSubcription: newComment})
+        return comment
+      }
+      throw Error('Authentication error')
     } catch (error) {
       throw Error(error.message)
     }

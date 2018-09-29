@@ -16,7 +16,7 @@ export default {
   }, context) => {
     try {
       let {title, content, author_id} = post;
-      if (context.session.user && context.session.user._id === author_id) {
+      if (context.user && context.user._id === author_id) {
         let user = await UserModel.findById(author_id)
         let post = new PostModel({title, content, created_at: new Date()})
         post.creator = user
