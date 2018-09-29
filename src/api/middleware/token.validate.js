@@ -5,7 +5,8 @@ export default function (req, res, next) {
       authenticate: false,
       error: {
         msg: 'Token does not provide'
-      }
+      },
+      user: null
     })
   }
   req.token = token

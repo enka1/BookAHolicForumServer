@@ -25,7 +25,8 @@ app.get('/token', tokenValidate, async(req, res) => {
       authenticate: false,
       error: {
         msg: 'Token is not valid'
-      }
+      },
+      user: null
     })
   }
 })
