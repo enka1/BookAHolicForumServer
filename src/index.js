@@ -36,7 +36,7 @@ const server = new ApolloServer({
 server.applyMiddleware({app})
 const ws = http.createServer(app)
 
-ws.listen(3001, () => {
+ws.listen(process.env.PORT || 3001, () => {
   new SubscriptionServer({
     execute,
     subscribe,
