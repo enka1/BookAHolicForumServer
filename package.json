@@ -26,7 +26,6 @@
     "express-graphql": "^0.6.12",
     "express-session": "^1.15.6",
     "graphql": "^14.0.0",
-    "graphql-disable-introspection": "^1.0.1",
     "graphql-iso-date": "^3.5.0",
     "graphql-subscriptions": "^1.0.0",
     "helmet": "^3.13.0",

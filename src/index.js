@@ -7,7 +7,6 @@ import {ApolloServer} from 'apollo-server-express'
 import {SubscriptionServer} from 'subscriptions-transport-ws'
 import http from 'http'
 import {execute, subscribe} from 'graphql'
-import NoIntrospection from 'graphql-disable-introspection';
 
 import {connectMongoDB} from './models'
 import schema from './schemas'
@@ -30,7 +29,6 @@ app.use(session({
 require('./api')
 const server = new ApolloServer({
   schema,
-  validationRules: [NoIntrospection],
   context: ({req}) => {
     return {user: req.session.user}
   }
