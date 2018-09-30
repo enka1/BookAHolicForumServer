@@ -1,5 +1,4 @@
 import {GraphQLList} from 'graphql'
-import 'babel-polyfill'
 
 import {CommentModel} from '../../models'
 import {CommentType} from '../types'

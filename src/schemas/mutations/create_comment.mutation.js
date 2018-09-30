@@ -1,5 +1,3 @@
-import 'babel-polyfill'
-
 import {CommentType} from '../types'
 import {CommentInputType} from '../inputs'
 import {PostModel, UserModel, CommentModel} from '../../models'

@@ -1,14 +1,14 @@
+import http from 'http'
 import express from 'express'
-import cors from 'cors'
-import helmet from 'helmet'
-import body_parser from 'body-parser'
 import session from 'express-session'
 import {ApolloServer} from 'apollo-server-express'
 import {SubscriptionServer} from 'subscriptions-transport-ws'
-import http from 'http'
 import {execute, subscribe} from 'graphql'
 import socketIO from 'socket.io'
-import 'babel-polyfill'
+import cors from 'cors'
+import helmet from 'helmet'
+import body_parser from 'body-parser'
+import compression from 'compression'
 
 import {connectMongoDB} from './models'
 import schema from './schemas'
@@ -36,9 +36,9 @@ const apolloServer = new ApolloServer({
 
 app.use(cors())
 app.use(helmet())
+app.use(compression())
 app.use(body_parser.json())
 app.use(serverSession)
-//Set io as global. Get throw app.get('io')
 app.set('io', io)
 io.on('connect', socket => {
   app.set('socketID', socket.id)

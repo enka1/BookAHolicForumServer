@@ -1,5 +1,3 @@
-import 'babel-polyfill'
-
 import {PostType} from '../types'
 import {PostInputType} from '../inputs'
 import {PostModel, UserModel} from '../../models'

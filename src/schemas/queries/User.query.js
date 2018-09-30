@@ -1,5 +1,4 @@
 import {GraphQLList} from 'graphql'
-import 'babel-polyfill'
 
 import {UserModel} from '../../models'
 import {UserType} from '../types'

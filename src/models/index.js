@@ -9,4 +9,5 @@ export const connectMongoDB = () => {
     ? process.env.MLAB_URL
     : 'mongodb://localhost:27017/Forum', {useNewUrlParser: true})
 }
+mongoose.set('useFindAndModify', false);
 export {UserModel, PostModel, CommentModel}

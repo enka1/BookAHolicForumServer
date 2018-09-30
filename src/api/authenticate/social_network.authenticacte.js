@@ -1,5 +1,4 @@
 import passport from 'passport'
-import 'babel-polyfill'
 
 import {app} from '../../'
 import {GoogleStrategy} from './strategies'

@@ -1,6 +1,5 @@
 import {GraphQLObjectType, GraphQLString} from 'graphql'
 import {GraphQLDateTime} from 'graphql-iso-date'
-import 'babel-polyfill'
 
 import {UserModel} from '../../models'
 import {UserType, PostType} from './'

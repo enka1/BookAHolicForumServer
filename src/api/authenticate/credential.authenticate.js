@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import bcrypt from 'bcrypt'
-import 'babel-polyfill'
 
 import {app} from '../../'
 import {UserModel} from '../../models'
