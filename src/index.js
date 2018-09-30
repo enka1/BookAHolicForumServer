@@ -1,48 +1,56 @@
 import express from 'express'
 import cors from 'cors'
+import helmet from 'helmet'
 import body_parser from 'body-parser'
 import session from 'express-session'
-import 'babel-polyfill'
 import {ApolloServer} from 'apollo-server-express'
 import {SubscriptionServer} from 'subscriptions-transport-ws'
 import http from 'http'
 import {execute, subscribe} from 'graphql'
+import socketIO from 'socket.io'
+import 'babel-polyfill'
 
 import {connectMongoDB} from './models'
 import schema from './schemas'
 
 connectMongoDB()
-export const app = express()
 
-app.use(cors())
-app.use(body_parser.json())
-app.use(session({
+export const app = express()
+const server = http.createServer(app)
+export const io = socketIO(server)
+const serverSession = session({
   saveUninitialized: true,
   secret: 'asd',
-  resave: false,
+  resave: true,
   cookie: {
     expires: 1000 * 60 * 48,
     maxAge: 1000 * 60 * 48
   }
-}))
-
-require('./api')
-const server = new ApolloServer({
+})
+const apolloServer = new ApolloServer({
   schema,
   context: ({req}) => {
     return {user: req.session.user}
   }
 })
-server.applyMiddleware({app})
-const ws = http.createServer(app)
 
-ws.listen(process.env.PORT || 3001, () => {
+app.use(cors())
+app.use(helmet())
+app.use(body_parser.json())
+app.use(serverSession)
+//Set io as global. Get throw app.get('io')
+app.set('io', io)
+io.on('connect', socket => {
+  app.set('socketID', socket.id)
+})
+require('./api')
+
+apolloServer.applyMiddleware({app})
+
+server.listen(process.env.PORT || 3001, () => {
   new SubscriptionServer({
     execute,
     subscribe,
     schema
-  }, {
-    server: ws,
-    path: '/graphql'
-  });
+  }, {server, path: '/graphql'});
 });

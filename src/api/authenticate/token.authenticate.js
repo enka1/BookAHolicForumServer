@@ -19,6 +19,7 @@ app.get('/token', tokenValidate, async(req, res) => {
         user: null
       })
     }
+    req.session.user = user
     res.send({authenticate: true, user})
   } catch (error) {
     res.send({

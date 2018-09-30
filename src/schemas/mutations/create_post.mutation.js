@@ -15,7 +15,7 @@ export default {
     post
   }, context) => {
     try {
-      let {title, content, author_id} = post;
+      let {title, content, author_id} = post
       if (context.user && context.user._id === author_id) {
         let user = await UserModel.findById(author_id)
         let post = new PostModel({title, content, created_at: new Date()})
@@ -27,7 +27,7 @@ export default {
         post.save()
         return post
       }
-      throw Error('Authenticate Error')
+      throw Error("Authentication Error")
     } catch (error) {
       throw Error(error.message)
     }

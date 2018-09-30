@@ -33,12 +33,11 @@ export default {
         post.save()
         newComment.save()
         pubSub.publish(COMMENT_ADDED, {commentSubcription: newComment})
-        return comment
+        return newComment
       }
-      throw Error('Authentication error')
+      throw Error('Authencation Error')
     } catch (error) {
       throw Error(error.message)
     }
-
   }
 }

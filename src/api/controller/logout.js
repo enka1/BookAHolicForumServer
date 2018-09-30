@@ -10,3 +10,7 @@ app.get('/logout', async(req, res) => {
   } else 
     res.send({authenticate: false, msg: 'Did not log in yet'})
 })
+
+app.get('/user', (req, res) => {
+  res.send(req.session)
+})

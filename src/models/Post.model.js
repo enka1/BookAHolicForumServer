@@ -43,10 +43,8 @@ const PostSchema = new mongoose.Schema({
     }
   ]
 })
-PostSchema.pre('remove', function(next){
-  CommentModel.deleteMany({
-    post: this._id
-  })
+PostSchema.pre('remove', function (next) {
+  CommentModel.deleteMany({post: this._id})
   next()
 })
 export default mongoose.model('Post', PostSchema)
