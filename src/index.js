@@ -1,4 +1,5 @@
-import http from 'http'
+import spdy from 'spdy'
+import fs from 'fs'
 import express from 'express'
 import session from 'express-session'
 import {ApolloServer} from 'apollo-server-express'
@@ -16,7 +17,11 @@ import schema from './schemas'
 connectMongoDB()
 
 export const app = express()
-const server = http.createServer(app)
+const ssl = {
+  key: fs.readFileSync(__dirname + "/../server.key"),
+  cert: fs.readFileSync(__dirname + "/../server.crt")
+}
+const server = spdy.createServer(ssl, app)
 export const io = socketIO(server)
 const serverSession = session({
   saveUninitialized: true,
