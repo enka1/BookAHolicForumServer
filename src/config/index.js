@@ -5,5 +5,5 @@ export const googleOauthConfig = {
   clientSecret: '4qlHj0zm5DdM_JKaVZf_wAC0',
   callbackURL: process.env.GOOGLE_CALLBACK
     ? process.env.GOOGLE_CALLBACK
-    : 'http://localhost:3001/auth/google/callback'
+    : 'https://localhost:3001/auth/google/callback'
 }

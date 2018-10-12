@@ -5,9 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.io = exports.app = undefined;
 
-var _http = require('http');
+var _spdy = require('spdy');
 
-var _http2 = _interopRequireDefault(_http);
+var _spdy2 = _interopRequireDefault(_spdy);
+
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
 
 var _express = require('express');
 
@@ -54,7 +58,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _models.connectMongoDB)();
 
 var app = exports.app = (0, _express2.default)();
-var server = _http2.default.createServer(app);
+var ssl = {
+  key: _fs2.default.readFileSync(__dirname + "/../server.key"),
+  cert: _fs2.default.readFileSync(__dirname + "/../server.crt")
+};
+var server = _spdy2.default.createServer(ssl, app);
 var io = exports.io = (0, _socket2.default)(server);
 var serverSession = (0, _expressSession2.default)({
   saveUninitialized: true,
@@ -70,7 +78,9 @@ var apolloServer = new _apolloServerExpress.ApolloServer({
   context: function context(_ref) {
     var req = _ref.req;
 
-    return { user: req.session.user };
+    return {
+      user: req.session.user
+    };
   }
 });
 
@@ -85,12 +95,17 @@ io.on('connect', function (socket) {
 });
 require('./api');
 
-apolloServer.applyMiddleware({ app: app });
+apolloServer.applyMiddleware({
+  app: app
+});
 
 server.listen(process.env.PORT || 3001, function () {
   new _subscriptionsTransportWs.SubscriptionServer({
     execute: _graphql.execute,
     subscribe: _graphql.subscribe,
     schema: _schemas2.default
-  }, { server: server, path: '/graphql' });
+  }, {
+    server: server,
+    path: '/graphql'
+  });
 });

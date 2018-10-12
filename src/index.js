@@ -2,16 +2,25 @@ import spdy from 'spdy'
 import fs from 'fs'
 import express from 'express'
 import session from 'express-session'
-import {ApolloServer} from 'apollo-server-express'
-import {SubscriptionServer} from 'subscriptions-transport-ws'
-import {execute, subscribe} from 'graphql'
+import {
+  ApolloServer
+} from 'apollo-server-express'
+import {
+  SubscriptionServer
+} from 'subscriptions-transport-ws'
+import {
+  execute,
+  subscribe
+} from 'graphql'
 import socketIO from 'socket.io'
 import cors from 'cors'
 import helmet from 'helmet'
 import body_parser from 'body-parser'
 import compression from 'compression'
 
-import {connectMongoDB} from './models'
+import {
+  connectMongoDB
+} from './models'
 import schema from './schemas'
 
 connectMongoDB()
@@ -34,8 +43,12 @@ const serverSession = session({
 })
 const apolloServer = new ApolloServer({
   schema,
-  context: ({req}) => {
-    return {user: req.session.user}
+  context: ({
+    req
+  }) => {
+    return {
+      user: req.session.user
+    }
   }
 })
 
@@ -50,12 +63,17 @@ io.on('connect', socket => {
 })
 require('./api')
 
-apolloServer.applyMiddleware({app})
+apolloServer.applyMiddleware({
+  app
+})
 
 server.listen(process.env.PORT || 3001, () => {
   new SubscriptionServer({
     execute,
     subscribe,
     schema
-  }, {server, path: '/graphql'});
+  }, {
+    server,
+    path: '/graphql'
+  });
 });
