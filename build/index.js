@@ -1,55 +1,59 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 exports.io = exports.app = undefined;
 
-var _spdy = require('spdy');
+var _spdy = require("spdy");
 
 var _spdy2 = _interopRequireDefault(_spdy);
 
-var _fs = require('fs');
+var _fs = require("fs");
 
 var _fs2 = _interopRequireDefault(_fs);
 
-var _express = require('express');
+var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
 
-var _expressSession = require('express-session');
+var _expressSession = require("express-session");
 
 var _expressSession2 = _interopRequireDefault(_expressSession);
 
-var _apolloServerExpress = require('apollo-server-express');
+var _apolloServerExpress = require("apollo-server-express");
 
-var _subscriptionsTransportWs = require('subscriptions-transport-ws');
+var _subscriptionsTransportWs = require("subscriptions-transport-ws");
 
-var _graphql = require('graphql');
+var _graphql = require("graphql");
 
-var _socket = require('socket.io');
+var _socket = require("socket.io");
 
 var _socket2 = _interopRequireDefault(_socket);
 
-var _cors = require('cors');
+var _cors = require("cors");
 
 var _cors2 = _interopRequireDefault(_cors);
 
-var _helmet = require('helmet');
+var _helmet = require("helmet");
 
 var _helmet2 = _interopRequireDefault(_helmet);
 
-var _bodyParser = require('body-parser');
+var _bodyParser = require("body-parser");
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _compression = require('compression');
+var _compression = require("compression");
 
 var _compression2 = _interopRequireDefault(_compression);
 
-var _models = require('./models');
+var _morgan = require("morgan");
 
-var _schemas = require('./schemas');
+var _morgan2 = _interopRequireDefault(_morgan);
+
+var _models = require("./models");
+
+var _schemas = require("./schemas");
 
 var _schemas2 = _interopRequireDefault(_schemas);
 
@@ -59,29 +63,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = exports.app = (0, _express2.default)();
 var ssl = {
-  key: _fs2.default.readFileSync(__dirname + "/../server.key"),
-  cert: _fs2.default.readFileSync(__dirname + "/../server.crt")
+	key: _fs2.default.readFileSync(__dirname + "/../server.key"),
+	cert: _fs2.default.readFileSync(__dirname + "/../server.crt")
 };
 var server = _spdy2.default.createServer(ssl, app);
 var io = exports.io = (0, _socket2.default)(server);
 var serverSession = (0, _expressSession2.default)({
-  saveUninitialized: true,
-  secret: 'asd',
-  resave: true,
-  cookie: {
-    expires: 1000 * 60 * 48,
-    maxAge: 1000 * 60 * 48
-  }
+	saveUninitialized: true,
+	secret: "asd",
+	resave: true,
+	cookie: {
+		expires: 1000 * 60 * 48,
+		maxAge: 1000 * 60 * 48
+	}
 });
 var apolloServer = new _apolloServerExpress.ApolloServer({
-  schema: _schemas2.default,
-  context: function context(_ref) {
-    var req = _ref.req;
+	schema: _schemas2.default,
+	context: function context(_ref) {
+		var req = _ref.req;
 
-    return {
-      user: req.session.user
-    };
-  }
+		return {
+			user: req.session.user
+		};
+	}
 });
 
 app.use((0, _cors2.default)());
@@ -89,23 +93,15 @@ app.use((0, _helmet2.default)());
 app.use((0, _compression2.default)());
 app.use(_bodyParser2.default.json());
 app.use(serverSession);
-app.set('io', io);
-io.on('connect', function (socket) {
-  app.set('socketID', socket.id);
+app.use((0, _morgan2.default)("combined"));
+app.set("io", io);
+io.on("connect", function (socket) {
+	app.set("socketID", socket.id);
 });
-require('./api');
+require("./api");
 
-apolloServer.applyMiddleware({
-  app: app
-});
+apolloServer.applyMiddleware({ app: app });
 
 server.listen(process.env.PORT || 3001, function () {
-  new _subscriptionsTransportWs.SubscriptionServer({
-    execute: _graphql.execute,
-    subscribe: _graphql.subscribe,
-    schema: _schemas2.default
-  }, {
-    server: server,
-    path: '/graphql'
-  });
+	new _subscriptionsTransportWs.SubscriptionServer({ execute: _graphql.execute, subscribe: _graphql.subscribe, schema: _schemas2.default }, { server: server, path: "/graphql" });
 });

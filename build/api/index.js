@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-require('./authenticate/credential.authenticate');
-require('./authenticate/token.authenticate');
-require('./authenticate/social_network.authenticacte');
-require('./controller/logout');
+require("./authenticate/credential.authenticate");
+require("./authenticate/token.authenticate");
+require("./authenticate/social_network.authenticacte");
+require("./controller/logout");
